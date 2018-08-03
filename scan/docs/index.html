@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ar">
+   <head>
+      <meta charset="utf-8">
+      <title> Hakthon </title>
+      <meta name="Team WWHK" content= "Hakthon">
+      <meta name="Viewport" content= "width=device-width; initial-scale=1; maximum-scale=1">
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+      <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+      <link rel="stylesheet" href="style.css">
+      <style>
+         img{
+         max-width: 100%;
+         height: auto;
+         }
+      </style>
+   </head>
+   <header class="row">
+      <a href="#" id="Logo"><img src="logo.png" style="max-width: 100%;
+         display: block;
+         height: auto;"> </a> 
+      <nav>
+         <a href="#" id="menu-icon"> </a>
+         <ul> 
+         </ul>
+      </nav>
+   </header>
+   <body class="row">
+      <div class="limiter">
+         <div class="container-login100">
+            <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+               <div id="app">
+                  <div class="row">
+                     <section class="cameras">
+                        <ul>
+                           <li v-if="cameras.length === 0" class="empty" style="color: white">No cameras found</li>
+                           <li v-for="camera in cameras" style="color: white">
+                              <span v-if="camera.id == activeCameraId" :title="formatName(camera.name)" class="active" style="color: white">{{ formatName(camera.name) }}</span>
+                              <span v-if="camera.id != activeCameraId" :title="formatName(camera.name)" style="color: white">
+                              <a @click.stop="selectCamera(camera)">{{ formatName(camera.name) }}</a>
+                              </span>
+                           </li>
+                        </ul>
+                     </section>
+                  </div>
+                  <div class="row">
+                     <section class="scans">
+                        <transition-group name="scans" tag="ul">
+                           <li id="content1" v-for="scan in scans" :key="scan.date" :title="scan.content"><a onclick="getInfo()" href="info.html">{{ scan.content }}</a></li>
+                        </transition-group>
+                        <ul id="change" v-if="scans.length === 0">
+                           <li  class="empty" style="text-align:left" >لا يوجد معلومات بعد</li>
+                        </ul>
+                     </section>
+                  </div>
+                  <div class="preview-container">
+                     <video id="preview"></video>
+                  </div>
+               </div>
+               <script type="text/javascript" src="app.js"></script>
+               <script type="text/javascript" >
+                    function getInfo(){
+                        var id = document.getElementById("content1").title();
+                        localStorage.setItem('key', ""+id);
+                    }
+               </script>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
